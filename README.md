@@ -69,7 +69,7 @@ Functions
 
 There are four public functions exposed by this package.
 
-##### extract
+### extract
 
 Extract a list of tupled scripture references from a block of text.
 
@@ -85,8 +85,7 @@ scriptures.extract('This is a test Rom 3:23-28 and 1 JOHn 2')
 ````
 
 
-##### reference_to_string
-
+### reference_to_string
 
 Get a display friendly string from a scripture reference.
 
@@ -129,7 +128,7 @@ scriptures.reference_to_string('2john', 1, 4, 1, 7)
 ````
 
 
-##### normalize_reference
+### normalize_reference
 
 Get a complete five value tuple scripture reference with full book name from
 partial data.
@@ -162,7 +161,7 @@ scriptures.normalize_reference('ecc', 1, 2, 2)
 ````
 
 
-##### is_valid_reference
+### is_valid_reference
 
 Check to see if a scripture reference is valid.
 
@@ -199,7 +198,7 @@ Regular Expressions
 
 There are two compiled regular expression patterns exposed by this package.
 
-##### book_re
+### book_re
 
 
 Match a valid abbreviation or book name.
@@ -213,7 +212,7 @@ re.findall(scriptures.book_re, 'Matt test Ecclesiastes and 2 peter')
 ````
 
 
-##### scripture_re
+### scripture_re
 
 Match a scripture reference pattern from a valid abbreviation or book name.
 
