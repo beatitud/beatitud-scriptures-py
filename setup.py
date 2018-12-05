@@ -12,6 +12,6 @@ setup(
     description='python-scriptures is a Python package and regular ' \
         'expression library for validating, extracting, and normalizing ' \
         'biblical scripture references from blocks of text.',
-    long_description=open('README').read(),
+    long_description=open('README.md').read(),
 )
 
