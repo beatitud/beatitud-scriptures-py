@@ -123,11 +123,10 @@ Single Chapter Book Examples:
 ````python
 import scriptures
 scriptures.reference_to_string('jude', 1, 4)
-
+# 'Jude 4'
 scriptures.reference_to_string('2john', 1, 4, 1, 7)
+# 'II John 4-7'
 ````
-    'Jude 4'
-    'II John 4-7'
 
 
 ##### normalize_reference
