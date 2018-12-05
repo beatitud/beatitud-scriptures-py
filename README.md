@@ -185,15 +185,14 @@ Examples:
 ````python
 import scriptures
 scriptures.is_valid_reference('John', 3, 16)
-
+# True
 scriptures.is_valid_reference('ecc', 1, 2, 2)
-````
+# True
 scriptures.is_valid_reference('Romans', 2, 30)
-    True
+# False
 scriptures.is_valid_reference('Romans', 2, 20, 2, 29)
-    True
-    False
-    True
+# True
+````
 
 
 Regular Expressions
@@ -201,7 +200,7 @@ Regular Expressions
 
 There are two compiled regular expression patterns exposed by this package.
 
-###### book_re
+##### book_re
 
 
 Match a valid abbreviation or book name.
@@ -211,13 +210,11 @@ Examples:
 import scriptures
 import re
 re.findall(scriptures.book_re, 'Matt test Ecclesiastes and 2 peter')
-
+# ['Matt', 'Ecclesiastes', '2 peter']    
 ````
-    ['Matt', 'Ecclesiastes', '2 peter']    
 
 
-scripture_re
-~~~~~
+##### scripture_re
 
 Match a scripture reference pattern from a valid abbreviation or book name.
 
@@ -259,11 +256,10 @@ Example
 from scriptures.texts.kjv1611 import KingJames1611
 myKJV1611 = KingJames1611()
 myKJV1611.extract('the protestant books are implemented- Matthew 1:1-5')
-
-myKJV1611.extract('and Deuterocanon (apocrypha)- wisdom of solomon 1:1')
-myKJV1611.extract('and I Esd 1:1, II Esd 1:1, Prayer of Manasseh 1:1')
 # [(u'Matthew', 1, 1, 1, 5)]
+myKJV1611.extract('and Deuterocanon (apocrypha)- wisdom of solomon 1:1')
 # [(u'The Wisdom of Solomon', 1, 1, 1, 1)]
+myKJV1611.extract('and I Esd 1:1, II Esd 1:1, Prayer of Manasseh 1:1')
 # [(u'I Esdras', 1, 1, 1, 1), (u'II Esdras', 1, 1, 1, 1), (u'Prayer of Manasseh', 1, 1, 1, 1)]
 ````
 
