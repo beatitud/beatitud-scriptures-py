@@ -46,7 +46,7 @@ Installation
 A setup script (setup.py) is provided.  To install, simply run the script with
 the install command:
 ````shell
-$ python setup.py install
+$ pip install git+https://github.com/beatitud/bible-ref-parser-py.git@master
 ````
 
 Or just put the scriptures package somewhere on the Python path.
@@ -329,8 +329,9 @@ Unit tests are provided to verify chapter and verse style normalization, output
 formatting, and book names and abbreviations.
 
 To run the test suite, cwd to just outside of the scriptures package and:
-
+```
 $ python -m unittest discover
+```
 
 
 Author
