@@ -1,22 +1,26 @@
 from __future__ import unicode_literals
 import re
 
+
 class InvalidReferenceException(Exception):
     """
     Invalid Reference Exception
     """
     pass
 
+
 class Text:
-    def __init__(self):
+    def __init__(self, language='en'):
+        self.language = language
         # Check for books
         if hasattr(self, 'books'):
             # make sure it is a dictionary
             if not isinstance(self.books, dict):
-                raise Exception('"books" should be a dictionary, who\'s values are four valued tuples (Book Name, Abbreviation, Regex, [ch1_verse_count, ch2_verse_count, ...])')
+                raise Exception('"books" should be a dictionary, who\'s values are four valued tuples (Book Name, '
+                                'Abbreviation, Regex, [ch1_verse_count, ch2_verse_count, ...])')
 
             # set the regex instance variables
-            self.book_re_string ='|'.join(b[2] for b in self.books.values())
+            self.book_re_string = '|'.join(b.get(self.language)[2] for b in self.books.values())
             self.book_re = re.compile(self.book_re_string, re.IGNORECASE | re.UNICODE)
 
             # set instance compiled scripture reference regex
@@ -38,7 +42,7 @@ class Text:
         Get a book from its name or None if not found
         """
         for book in self.books.values():
-            if re.match('^%s$' % book[2], name, re.IGNORECASE):
+            if re.match('^%s$' % book.get(self.language)[2], name, re.IGNORECASE):
                 return book
 
         return None
@@ -78,14 +82,14 @@ class Text:
 
         book = self.get_book(bn)
 
-        if c == ec and len(book[3]) == 1: # single chapter book
+        if c == ec and len(book.get('chapters')) == 1: # single chapter book
             if v == ev: # single verse
                 return '{0} {1}'.format(bn, v)
             else: # multiple verses
                 return '{0} {1}-{2}'.format(bn, v, ev)
         else: # multichapter book
             if c == ec: # same start and end chapters
-                if v == 1 and ev == book[3][c-1]: # full chapter
+                if v == 1 and ev == book.get('chapters')[c-1]: # full chapter
                     return '{0} {1}'.format(bn, c)
                 elif v == ev: # single verse
                     return '{0} {1}:{2}'.format(bn, c, v)
@@ -93,7 +97,7 @@ class Text:
                     return '{0} {1}:{2}-{3}'.format(
                         bn, c, v, ev)
             else: # multiple chapters
-                if v == 1 and ev == book[3][ec-1]: # multichapter ref
+                if v == 1 and ev == book.get('chapters')[ec-1]: # multichapter ref
                     return '{0} {1}-{2}'.format(bn, c, ec)
                 else: # multi-chapter, multi-verse ref
                     return '{0} {1}:{2}-{3}:{4}'.format(bn, c, v, ec, ev)
@@ -115,7 +119,7 @@ class Text:
             # treat the incoming chapter argument as though it were the verse.
             # This normalizes references such as:
             # Jude 2 and Jude 2-4
-            if len(book[3]) == 1:
+            if len(book.get('chapters')) == 1:
                 verse=chapter
                 chapter=1
             # If the ref is in format: (Book, ?, None, None, #)
@@ -138,27 +142,27 @@ class Text:
         end_chapter = int(end_chapter) if end_chapter else chapter
         end_verse = int(end_verse) if end_verse else None
         if not book \
-        or (chapter is None or chapter < 1 or chapter > len(book[3])) \
-        or (verse is not None and (verse < 1 or verse > book[3][chapter-1])) \
+        or (chapter is None or chapter < 1 or chapter > len(book.get('chapters'))) \
+        or (verse is not None and (verse < 1 or verse > book.get('chapters')[chapter-1])) \
         or (end_chapter is not None and (
             end_chapter < 1
             or end_chapter < chapter
-            or end_chapter > len(book[3]))) \
+            or end_chapter > len(book.get('chapters')))) \
         or (end_verse is not None and(
             end_verse < 1
-            or (end_chapter and end_verse > book[3][end_chapter-1])
+            or (end_chapter and end_verse > book.get('chapters')[end_chapter-1])
             or (chapter == end_chapter and end_verse < verse))):
             raise InvalidReferenceException()
         
         if not verse:
-            return (book[0], chapter, 1, chapter, book[3][chapter-1])
+            return (book.get(self.language)[0], chapter, 1, chapter, book.get('chapters')[chapter-1])
         if not end_verse: 
             if end_chapter and end_chapter != chapter:
-                end_verse = book[3][end_chapter-1]
+                end_verse = book.get('chapters')[end_chapter-1]
             else:
                 end_verse = verse
         if not end_chapter:
             end_chapter = chapter
-        return (book[0], chapter, verse, end_chapter, end_verse)
+        return (book.get(self.language)[0], chapter, verse, end_chapter, end_verse)
 
 

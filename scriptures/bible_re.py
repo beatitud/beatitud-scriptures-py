@@ -1,8 +1,8 @@
-from .texts.protestant import ProtestantCanon
+from .texts.catholic import CatholicCanon
 
 # create an instance of the Protestant Canon to use as the default
-pcanon=ProtestantCanon()
+cc = CatholicCanon()
 
-book_re = pcanon.book_re
-scripture_re = pcanon.scripture_re
+book_re = cc.book_re
+scripture_re = cc.scripture_re
 

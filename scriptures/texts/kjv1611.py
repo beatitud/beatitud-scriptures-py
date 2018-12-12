@@ -14,13 +14,17 @@ class KingJames1611(Text):
     books.update(ProtestantCanon.books)
     books.update(Deuterocanon.books)
     books.update({
-        '1esd': ('I Esdras', '1Esd', '(?:(?:1|I)(?:\s)?)Esd(?:ras)?',
-                 [58, 30, 24, 63, 73, 34, 15, 96, 55]),
-        '2esd': ('II Esdras', '2Esd', '(?:(?:2|II)(?:\s)?)Esd(?:ras)?',
-                 [40, 48, 36, 52, 56, 59, 70, 63,
-                  47, 59, 46, 51, 58, 48, 63, 78]),
-        'prman': ('Prayer of Manasseh', 'prman',
-                  'prman|(?:prayer of )?manasseh',
-                  [15]),
+        '1esd': {
+            'en': ('I Esdras', '1Esd', '(?:(?:1|I)(?:\s)?)Esd(?:ras)?'),
+            'chapters': [58, 30, 24, 63, 73, 34, 15, 96, 55]
+        },
+        '2esd': {
+            'en': ('II Esdras', '2Esd', '(?:(?:2|II)(?:\s)?)Esd(?:ras)?'),
+            'chapters': [40, 48, 36, 52, 56, 59, 70, 63, 47, 59, 46, 51, 58, 48, 63, 78]
+        },
+        'prman': {
+            'en': ('Prayer of Manasseh', 'prman', 'prman|(?:prayer of )?manasseh'),
+            'chapters': [15]
+         },
     })
 
