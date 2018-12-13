@@ -12,28 +12,30 @@ class InvalidReferenceException(Exception):
 class Text:
     def __init__(self, language='en'):
         self.language = language
-        # Check for books
+
+        # We check for books
         if hasattr(self, 'books'):
-            # make sure it is a dictionary
+            # We it is not a dictionary, we raise an error
             if not isinstance(self.books, dict):
                 raise Exception('"books" should be a dictionary, who\'s values are four valued tuples (Book Name, '
                                 'Abbreviation, Regex, [ch1_verse_count, ch2_verse_count, ...])')
 
-            # set the regex instance variables
+            # We set the regex instance variables
             self.book_re_string = '|'.join(b.get(self.language)[2] for b in self.books.values())
             self.book_re = re.compile(self.book_re_string, re.IGNORECASE | re.UNICODE)
 
-            # set instance compiled scripture reference regex
+            # We set the compiled scripture reference regex
             self.scripture_re = re.compile(
-                r'\b(?P<BookTitle>%s)\s*' \
-                 '(?P<ChapterNumber>\d{1,3})' \
-                 '(?:\s*:\s*(?P<VerseNumber>\d{1,3}))?' \
-                 '(?:\s*[-\u2013\u2014]\s*' \
-                 '(?P<EndChapterNumber>\d{1,3}(?=\s*:\s*))?' \
-                 '(?:\s*:\s*)?' \
-                 '(?P<EndVerseNumber>\d{1,3})?' \
-                 ')?' % (self.book_re_string,), re.IGNORECASE | re.UNICODE)
+                r'\b(?P<BookTitle>%s)\s*'
+                r'(?P<ChapterNumber>\d{1,3})'
+                r'(?:\s*:\s*(?P<VerseNumber>\d{1,3}))?'
+                r'(?:\s*[-\u2013\u2014]\s*'
+                r'(?P<EndChapterNumber>\d{1,3}(?=\s*:\s*))?'
+                r'(?:\s*:\s*)?'
+                r'(?P<EndVerseNumber>\d{1,3})?'
+                r')?' % (self.book_re_string,), re.IGNORECASE | re.UNICODE)
 
+        # Otherwise we raise an error
         else:
             raise Exception('Text has no "books"')
 

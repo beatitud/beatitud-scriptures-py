@@ -1,17 +1,16 @@
 from distutils.core import setup
 
 setup(
-    name='python-scriptures',
-    version='3.0.0',
-    author='David Davis',
-    author_email='davisd@davisd.com',
+    name='bible-ref-parser-py',
+    version='1.0.0',
+    author='Antoine Rose',
+    author_email='antoine_rose@hotmail.fr',
     packages=['scriptures', 'scriptures/texts'],
-    url='http://www.davisd.com/projects/python-scriptures/',
-    data_files=[('.',['LICENSE'])],
+    data_files=[('.', ['LICENSE'])],
     license='LICENSE',
-    description='python-scriptures is a Python package and regular ' \
-        'expression library for validating, extracting, and normalizing ' \
-        'biblical scripture references from blocks of text.',
+    description='bible-ref-parser-py is a python library built on top of python-scriptures library, '
+                'implemented by David Davis <davisd@davisd.com> (Copyright (c) 2010-2015). It is a Python '
+                'package and regular expression library for validating, extracting, and normalizing '
+                'biblical references from text.',
     long_description=open('README.md').read(),
 )
-

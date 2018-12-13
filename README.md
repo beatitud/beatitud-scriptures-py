@@ -1,11 +1,13 @@
-# Bible Ref Parser Py
+# bible-ref-parser-py
 
 
 bible-ref-parser-py is a Python 2 and Python 3 compatible package and regular
 expression library for validating, extracting and normalizing biblical
-scripture references from blocks of text.
+references from texts.
 
-For more information, see http://www.davisd.com/projects/python-scriptures/
+bible-ref-parser-py is built on top of python-scriptures library, implemented by 
+[David Davis](http://www.davisd.com/projects/python-scriptures/) (Copyright (c) 2010-2015). His email : [davisd@davisd.com](mailto:davisd@davisd.com).
+
 
 Typical usage is as follows::
 ````python
@@ -332,11 +334,3 @@ To run the test suite, cwd to just outside of the scriptures package and:
 ```
 $ python -m unittest discover
 ```
-
-
-Author
-======
-
-David Davis <davisd@davisd.com>
-http://www.davisd.com
-
