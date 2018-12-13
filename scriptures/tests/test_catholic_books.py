@@ -1,6 +1,6 @@
 from ..texts.catholic import CatholicCanon
 
-cc = CatholicCanon()
+cc = CatholicCanon(language='fr')
 
 refs = [
     "(Jn 17, 21)",
@@ -15,6 +15,10 @@ refs = [
     "(cf. Ps 138, 1).",
     "(cf. Jn 9, 5)",
     "(v. 49)",
+    "Ez 13, 9",
+    "Ézéchiel 13, 12",
+    "Jr 3, 5",
+    "Osee 10"
 ]
 
 for ref in refs:
