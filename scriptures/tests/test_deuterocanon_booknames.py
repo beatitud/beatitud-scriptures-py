@@ -1,6 +1,6 @@
 import unittest
 
-from ..texts.deuterocanon import Deuterocanon
+from ..canons.deuterocanon import Deuterocanon
 
 dc = Deuterocanon()
 

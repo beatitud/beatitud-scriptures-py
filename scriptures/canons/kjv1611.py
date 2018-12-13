@@ -1,10 +1,10 @@
 from __future__ import unicode_literals
-from .base import Text
+from scriptures.canons.base import CanonBase
 from .protestant import ProtestantCanon
 from .deuterocanon import Deuterocanon
 
 
-class KingJames1611(Text):
+class Canon(CanonBase):
     """
     KingJames1611 - Contains what is considered the protestant canonical texts,
     plus the Deuteronomical books (in its Apocrypha)

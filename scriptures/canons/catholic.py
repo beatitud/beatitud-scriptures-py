@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from .base import Text
+from scriptures.canons.base import CanonBase
 
 
-class CatholicCanon(Text):
+class Canon(CanonBase):
     """
     Catholic Canonical Bible with Old and New Testaments
     """
@@ -476,3 +476,5 @@ class CatholicCanon(Text):
         },
     }
 
+    def __int__(self):
+        print('HELLo')

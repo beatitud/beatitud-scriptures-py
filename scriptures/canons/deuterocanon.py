@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
-from .base import Text
+from scriptures.canons.base import CanonBase
 
 
-class Deuterocanon(Text):
+class Canon(CanonBase):
     """
     Deuterocanonical Books
     """

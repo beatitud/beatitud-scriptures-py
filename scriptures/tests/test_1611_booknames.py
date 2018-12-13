@@ -1,6 +1,6 @@
 import unittest
 
-from ..texts.kjv1611 import KingJames1611
+from ..canons.kjv1611 import KingJames1611
 
 kjv1611 = KingJames1611()
 

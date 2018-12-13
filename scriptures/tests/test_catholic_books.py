@@ -1,6 +1,4 @@
-from ..texts.catholic import CatholicCanon
-
-cc = CatholicCanon(language='fr')
+from scriptures.text import Text
 
 refs = [
     "(Jn 17, 21)",
@@ -22,5 +20,6 @@ refs = [
 ]
 
 for ref in refs:
-    print("{}: {}".format(ref, cc.extract(ref)))
+    text = Text(ref, language='fr', canon='catholic')
+    print("{}: {}".format(ref, text.extract_refs()))
 

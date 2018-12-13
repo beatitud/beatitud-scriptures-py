@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
-from .base import Text
+from scriptures.canons.base import CanonBase
 
 
-class ProtestantCanon(Text):
+class Canon(CanonBase):
     """
     Protestant Canonical Bible with Old and New Testaments
     """
