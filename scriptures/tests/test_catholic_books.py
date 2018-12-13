@@ -23,3 +23,5 @@ refs = [
 
 for ref in refs:
     print("{}: {}".format(ref, cc.extract(ref)))
+
+print(dir(cc.extract(ref)))
