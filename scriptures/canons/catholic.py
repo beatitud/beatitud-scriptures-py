@@ -11,68 +11,68 @@ class Canon(CanonBase):
     books = {
         # The Pentateuch
         'gn': {
-            'en': ('Genesis', 'Gen', 'Gen(?:esis)?'),
-            'fr': ('Genèse', 'Gn', 'Gen(?:èse)?'),
+            'en': ('Genesis', 'Gen', 'G(?:e)?n(?:esis)?'),
+            'fr': ('Genèse', 'Gn', 'G(?:e)?n(?:èse)?'),
             'chapters':
                 [31, 25, 24, 26, 32, 22, 24, 22, 29, 32, 32, 20, 18, 24, 21, 16, 27, 33, 38, 18, 34, 24, 20, 67, 34, 35,
              46, 22, 35, 43, 55, 32, 20, 31, 29, 43, 36, 30, 23, 23, 57, 38, 34, 34, 28, 34, 31, 22, 33, 26]
         },
         'ex': {
-            'en': ('Exodus', 'Exod', 'Exod(?:us)?'),
-            'fr': ('Exode', 'Exode', 'Exod(?:e)?'),
+            'en': ('Exodus', 'Exod', 'Ex(?:odus)?'),
+            'fr': ('Exode', 'Exode', 'Ex(?:ode)?'),
             'chapters':
                 [22, 25, 22, 31, 23, 30, 25, 32, 35, 29, 10, 51, 22, 31, 27, 36, 16, 27, 25, 26, 36, 31, 33, 18, 40,
              37, 21, 43, 46, 38, 18, 35, 23, 35, 35, 38, 29, 31, 43, 38]
         },
         'lv': {
-            'en': ('Leviticus', 'Lev', 'Lev(?:iticus)?'),
-            'fr': ('Lévitique', 'Lev', 'Lév(?:itique)?'),
+            'en': ('Leviticus', 'Lev', 'L(?:e)?v(?:iticus)?'),
+            'fr': ('Lévitique', 'Lev', 'L(?:[ée])?v(?:itique)?'),
             'chapters':
                 [17, 16, 17, 35, 19, 30, 38, 36, 24, 20, 47, 8, 59, 57, 33, 34, 16, 30, 37, 27, 24, 33, 44, 23, 55, 46, 34]
         },
         'nb': {
-            'en': ('Numbers', 'Num', 'Num(?:bers)?'),
-            'fr': ('Nombres', 'Nb', 'Nom(?:bres)?'),
+            'en': ('Numbers', 'Num', 'N(?:um)?b(?:ers)?'),
+            'fr': ('Nombres', 'Nb', 'N(?:om)?b(?:res)?'),
             'chapters':
                 [54, 34, 51, 49, 31, 27, 89, 26, 23, 36, 35, 16, 33, 45, 41, 50, 13, 32, 22, 29, 35, 41, 30, 25, 18, 65,
              23, 31, 40, 16, 54, 42, 56, 29, 34, 13]
         },
         'dt': {
-            'en': ('Deuteronomy', 'Deut', 'Deut(?:eronomy)?'),
-            'fr': ('Deutéronome', 'Deut', 'Deut(?:éronome)?'),
+            'en': ('Deuteronomy', 'Deut', 'D(?:eu)?t(?:eronomy)?'),
+            'fr': ('Deutéronome', 'Deut', 'D(?:eu)?t(?:[ée]ronome)?'),
             'chapters':
                 [46, 37, 29, 49, 33, 25, 26, 20, 29, 22, 32, 32, 18, 29, 23, 22, 20, 22, 21, 20, 23, 30, 25, 22, 19,
              19, 26, 68, 29, 20, 30, 52, 29, 12]
         },
         'jos': {
             'en': ('Joshua', 'Josh', 'Josh(?:ua)?'),
-            'fr': ('Josué', 'Jos', 'Jos(?:ué)?'),
+            'fr': ('Josué', 'Jos', 'Jos(?:u[ée])?'),
             'chapters':
                 [18, 24, 17, 24, 15, 27, 26, 35, 27, 43, 23, 24, 33, 15, 63, 10, 18, 28, 51, 9, 45, 34, 16, 33]
         },
         'jg': {
             'en': ('Judges', 'Judg', 'Judg(?:es)?'),
-            'fr': ('Juges', 'Jug', 'Jug(?:es)?'),
+            'fr': ('Juges', 'Jug', 'J(?:u)?g(?:es)?'),
             'chapters':
                 [36, 23, 31, 24, 31, 40, 25, 35, 57, 18, 40, 15, 25, 20, 20, 31, 13, 31, 30, 48, 25]
         },
         'rt': {
-            'en': ('Ruth', 'Ruth', 'Ruth'),
-            'fr': ('Ruth', 'Ruth', 'Ruth'),
+            'en': ('Ruth', 'Ruth', 'R(?:u)?t(?:h)?'),
+            'fr': ('Ruth', 'Ruth', 'R(?:u)?t(?:h)?'),
             'chapters':
                 [22, 23, 18, 22]
         },
         # The Historical Books
         '1s': {
-            'en': ('I Samuel', '1 S', '(?:1|I)(?:\s)?Sam(?:uel)?'),
-            'fr': ('I Samuel', '1 S', '(?:1|I)(?:\s)?Sam(?:uel)?'),
+            'en': ('I Samuel', '1 S', '(?:1|I)(?:\s)?S(?:amuel)?'),
+            'fr': ('I Samuel', '1 S', '(?:1|I)(?:\s)?S(?:amuel)?'),
             'chapters':
                 [28, 36, 21, 22, 12, 21, 17, 22, 27, 27, 15, 25, 23, 52, 35, 23, 58, 30, 24, 42, 15, 23, 29, 22, 44,
              25, 12, 25, 11, 31, 13]
         },
         '2s': {
-            'en': ('II Samuel', '2 S', '(?:2|II)(?:\s)?Sam(?:uel)?'),
-            'fr': ('II Samuel', '2 S', '(?:2|II)(?:\s)?Sam(?:uel)?'),
+            'en': ('II Samuel', '2 S', '(?:2|II)(?:\s)?S(?:amuel)?'),
+            'fr': ('II Samuel', '2 S', '(?:2|II)(?:\s)?S(?:amuel)?'),
             'chapters':
                 [27, 32, 39, 12, 25, 23, 29, 18, 13, 19, 27, 31, 39, 33, 37, 23, 29, 33, 43, 26, 22, 51, 39, 25]
         },
@@ -89,15 +89,15 @@ class Canon(CanonBase):
                 [18, 25, 27, 44, 27, 33, 20, 29, 37, 36, 21, 21, 25, 29, 38, 20, 41, 37, 37, 21, 26, 20, 37, 20, 30]
         },
         '1ch': {
-            'en': ('I Chronicles', '1 Chr', '(?:1|I)(?:\s)?Chr(?:o(?:n(?:icles)?)?)?'),
-            'fr': ('I Chroniques', '1 Chr', '(?:1|I)(?:\s)?Chr(?:o(?:n(?:iques)?)?)?'),
+            'en': ('I Chronicles', '1 Ch', '(?:1|I)(?:\s)?Ch(?:ro(?:n(?:icles)?)?)?'),
+            'fr': ('I Chroniques', '1 Ch', '(?:1|I)(?:\s)?Ch(?:ro(?:n(?:iques)?)?)?'),
             'chapters':
                 [54, 55, 24, 43, 26, 81, 40, 40, 44, 14, 47, 40, 14, 17, 29, 43, 27, 17, 19, 8, 30, 19, 32, 31, 31,
                  32, 34, 21, 30]
         },
         '2ch': {
-            'en': ('II Chronicles', '2 Chr', '(?:2|II)(?:\s)?Chr(?:o(?:n(?:icles)?)?)?'),
-            'fr': ('II Chroniques', '2 Chr', '(?:2|II)(?:\s)?Chr(?:o(?:n(?:iques)?)?)?'),
+            'en': ('II Chronicles', '2 Ch', '(?:2|II)(?:\s)?Ch(?:ro(?:n(?:icles)?)?)?'),
+            'fr': ('II Chroniques', '2 Ch', '(?:2|II)(?:\s)?Ch(?:ro(?:n(?:iques)?)?)?'),
             'chapters':
                 [17, 18, 17, 22, 14, 42, 22, 18, 31, 19, 23, 16, 22, 15, 19, 14, 19, 34, 11, 37, 20, 12, 21, 27, 28,
                  23, 9, 27, 36, 27, 21, 33, 25, 33, 27, 23]
@@ -115,14 +115,14 @@ class Canon(CanonBase):
                 [11, 20, 32, 23, 19, 19, 73, 18, 38, 39, 36, 47, 31]
         },
         'tb': {
-            'en': ('Tobit', 'Tb', 'Tob(?:it)?'),
-            'fr': ('Tobie', 'Tb', 'Tob(?:ie)?'),
+            'en': ('Tobit', 'Tb', 'T(?:o)?b(?:it)?'),
+            'fr': ('Tobie', 'Tb', 'T(?:o)?b(?:ie)?'),
             'chapters':
                 [22, 14, 17, 21, 22, 18, 17, 21, 6, 14, 18, 22, 18, 15]
         },
         'jdt': {
-            'en': ('Judith', 'Jud', 'Jud(?:ith)?'),
-            'fr': ('Judith', 'Jud', 'Jud(?:ith)?'),
+            'en': ('Judith', 'Jdt', 'J(?:u)?d(?:i)?t(?:h)?'),
+            'fr': ('Judith', 'Jdt', 'J(?:u)?d(?:i)?t(?:h)?'),
             'chapters':
                 [16, 28, 10, 15, 24, 21, 32, 36, 14, 23, 23, 20, 20, 19, 14, 25]
         },
@@ -212,14 +212,14 @@ class Canon(CanonBase):
                  22, 17, 32, 24, 40, 44, 26, 22, 19, 32, 21, 28, 18, 16, 18, 22, 13, 30, 5, 28, 7, 47, 39, 46, 64, 34]
         },
         'lm': {
-            'en': ('Lamentations', 'Lm', 'Lam(?:entations)?'),
-            'fr': ('Lamentations', 'Lm', 'Lam(?:entations)?'),
+            'en': ('Lamentations', 'Lm', 'L(?:a)?m(?:entations)?'),
+            'fr': ('Lamentations', 'Lm', 'L(?:a)?m(?:entations)?'),
             'chapters':
                 [22, 22, 66, 22, 22]
         },
         'ba': {
-            'en': ('Baruch', 'Ba', 'Bar(?:uch)?'),
-            'fr': ('Baruch', 'Ba', 'Bar(?:uch)?'),
+            'en': ('Baruch', 'Ba', 'Ba(?:ruch)?'),
+            'fr': ('Baruch', 'Ba', 'Ba(?:ruch)?'),
             'chapters':
                 [22, 35, 38, 37, 9, 72]
         },
@@ -249,7 +249,7 @@ class Canon(CanonBase):
                 [20, 32, 21]
         },
         'am': {
-            'en': ('Amos', 'Am', 'Amos'),
+            'en': ('Amos', 'Am', 'Am(?:os)?'),
             'fr': ('Amos', 'Am', 'Am(?:os)?'),
             'chapters':
                 [15, 16, 15, 13, 27, 14, 17, 14, 15]
@@ -459,7 +459,7 @@ class Canon(CanonBase):
         },
         '3jn': {
             'en': ('III John', '3 Jn', '(?:(?:3|III)(?:\s)?)J(?:oh)?n'),
-            'fr': ('III Jean', '3 Jn', '(?:(?:3|III)(?:\s)?)J(?:ean)?n'),
+            'fr': ('III Jean', '3 Jn', '(?:(?:3|III)(?:\s)?)J(?:ea)?n'),
             'chapters':
                 [14]
         },

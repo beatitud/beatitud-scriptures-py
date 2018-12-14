@@ -94,7 +94,7 @@ class Reference:
         if (not self.chapter or self.chapter < 1 or self.chapter > chapters_count) \
                 or (self.verse and (self.verse < 1 or self.verse > self.chapters[self.chapter - 1])) \
                 or (self.end_chapter and (self.end_chapter < 1 or self.end_chapter < self.chapter or self.end_chapter > chapters_count)) \
-                or (self.end_verse and (self.end_verse < 1 or (self.end_chapter and self.end_verse > self.chapters[self.chapter - 1])
+                or (self.end_verse and (not self.verse or self.end_verse < 1 or (self.end_chapter and self.end_verse > self.chapters[self.chapter - 1])
                                         or (self.chapter == self.end_chapter and self.end_verse < self.verse))):
             self.is_validated = False
             if not raise_error:

@@ -15,7 +15,7 @@ class Text:
             r'\b(?P<book>%s)\s*'
             r'(?P<chapter>\d{1,3})'
             r'(?:\s*[:,]\s*(?P<verse>\d{1,3}))?'
-            r'(?:\s*[-]\s*'
+            r'(?:\w?\s*[-]\s*'
             r'(?P<end_chapter>\d{1,3}(?=\s*:\s*))?'
             r'(?:\s*:\s*)?'
             r'(?P<end_verse>\d{1,3})?'
