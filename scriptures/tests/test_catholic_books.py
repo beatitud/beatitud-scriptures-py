@@ -22,5 +22,5 @@ text = Text(text, language='fr', canon='catholic')
 print(text)
 
 for ref in text.extract_refs(guess=True):
-    print(ref)
+    print(str(ref))
 

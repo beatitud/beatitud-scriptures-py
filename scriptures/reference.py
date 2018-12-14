@@ -19,8 +19,20 @@ class Reference:
         self.end_verse = end_verse
         self.language = canon.language
         self.canon = canon
+        self.book_code = None
         self.book_dict = None
         self.is_valid = None
+
+    def __str__(self):
+        b, c, v, ec, ev = self.book, self.chapter, self.verse, self.end_chapter, self.end_verse
+        bc = self.book_code
+        if not self.is_valid:
+            raise InvalidReferenceException
+
+        if ev:
+            return '{}_{}_{}-{}'.format(bc, c, v, ev)
+
+        return '{}_{}_{}'.format(bc, c, v)
 
     def __repr__(self):
         b, c, v, ec, ev = self.book, self.chapter, self.verse, self.end_chapter, self.end_verse
@@ -98,11 +110,6 @@ class Reference:
         if not self.end_verse:
             if self.end_chapter and self.end_chapter != self.chapter:
                 self.end_verse = chapters[self.chapter - 1]
-            else:
-                self.end_verse = self.verse
-
-        if not self.end_chapter:
-            self.end_chapter = self.chapter
 
         self.is_valid = True
         return self.is_valid
@@ -114,10 +121,11 @@ class Reference:
         if not name:
             return None
 
-        for book_dict in self.canon.books.values():
+        for book_code, book_dict in self.canon.books.items():
             if re.match('^%s$' % book_dict.get(self.language)[2], name, re.IGNORECASE):
                 self.book_dict = book_dict
                 self.book = self.book_dict.get(self.language)[0]
+                self.book_code = book_code
                 return self.book
 
         return None
