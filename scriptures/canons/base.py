@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 import re
-import numpy as np
 
 
 class CanonBase:
