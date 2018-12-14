@@ -30,6 +30,9 @@ class Reference:
         if not self.is_valid:
             raise InvalidReferenceException
 
+        if ec != c:
+            return '{}_{}-{}_{}-{}'.format(bc, c, ec, v, ev)
+
         if ev != v:
             return '{}_{}_{}-{}'.format(bc, c, v, ev)
 
@@ -145,3 +148,56 @@ class Reference:
             return self.validate()
         except InvalidReferenceException:
             return False
+
+
+def guess_partial_refs(refs):
+    new_refs = list()
+    for i, ref in enumerate(refs):
+        # We try to guess refs where we only have a verse number
+        if not ref.is_valid and not ref.book and not ref.chapter:
+            index = 0
+            while not ref.is_valid and index < i:
+                ref.book = refs[index].book
+                ref.chapter = refs[index].chapter
+                ref.validate(raise_error=False)
+                index += 1
+
+        if ref.is_valid:
+            new_refs.append(ref)
+
+    return new_refs
+
+
+def simplify_refs(refs):
+    # We write our covering dict of arrays
+    refs_dict = dict()
+    for i, ref in enumerate(refs):
+        # We cannot work on invalid refs
+        if not ref.is_valid:
+            continue
+        # If book not already known, we initialise it
+        if not refs_dict.get(ref.book):
+            refs_dict[ref.book] = list([[0 for i in range(verse_count)] for verse_count in ref.chapters])
+
+        for c in range(ref.end_chapter - ref.chapter + 1):
+            end_verse = ref.end_verse if ref.chapter + c == ref.end_chapter else ref.chapters[ref.chapter + c - 1]
+            for v in range(end_verse - ref.verse + 1):
+                refs_dict[ref.book][ref.chapter + c - 1][ref.verse + v - 1] = 1
+
+    new_refs = list()
+    # We read our covering dict
+    for book, ref_list in refs_dict.items():
+        ref = None
+        for c, c_list in enumerate(ref_list):
+            for v, value in enumerate(c_list):
+                if value == 1 and not ref:
+                    ref = Reference(book=book, chapter=c+1, end_chapter=c+1, verse=v+1, end_verse=v+1)
+                    ref.validate()
+                if value == 1 and ref:
+                    ref.end_chapter = c + 1
+                    ref.end_verse = v + 1
+                if value == 0 and ref:
+                    new_refs.append(ref)
+                    ref = None
+
+    return new_refs

@@ -1,5 +1,5 @@
 from scriptures.text import Text
-from .text import text
+from .text import texts
 
 # text = "(Jn 17, 21) " + \
 #        "(1 P 3, 8) " + \
@@ -18,9 +18,14 @@ from .text import text
 #        "Jr 3, 5 " + \
 #        "Osee 1"
 
-text = Text(text, language='fr', canon='catholic')
-print(text)
+for i, text in enumerate(texts):
+    print("\n[*] Text {}".format(i+1))
+    text = Text(text, language='fr', canon='catholic')
+    # print(text)
+    print("\n[*] Not simplified")
+    for ref in text.extract_refs(guess=True, simplify=False):
+        print(str(ref))
 
-for ref in text.extract_refs(guess=True):
-    print(str(ref))
-
+    print("\n[*] Simplified")
+    for ref in text.extract_refs(guess=True, simplify=True):
+        print(str(ref))
