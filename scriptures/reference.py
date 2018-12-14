@@ -80,18 +80,11 @@ class Reference:
         # In case of incomplete or wrong information, we raise an exception
         chapters = self.book_dict.get('chapters')
         chapters_count = len(chapters)
-        verses_count = chapters[self.chapter - 1]
-        invalid_conditions = [
-            not self.book_dict,
-            not self.chapter or self.chapter < 1 or self.chapter > chapters_count,
-            self.verse and (self.verse < 1 or self.verse > verses_count),
-            self.end_chapter and \
-            (self.end_chapter < 1 or self.end_chapter < self.chapter
-             or self.end_chapter > chapters_count),
-            self.end_verse and (self.end_verse < 1 or (self.end_chapter and self.end_verse > verses_count)
-                                or (self.chapter == self.end_chapter and self.end_verse < self.verse))
-        ]
-        if any(invalid_conditions):
+        if (not self.chapter or self.chapter < 1 or self.chapter > chapters_count) \
+                or (self.verse and (self.verse < 1 or self.verse > chapters[self.chapter - 1])) \
+                or (self.end_chapter and (self.end_chapter < 1 or self.end_chapter < self.chapter or self.end_chapter > chapters_count)) \
+                or (self.end_verse and (self.end_verse < 1 or (self.end_chapter and self.end_verse > chapters[self.chapter - 1])
+                                        or (self.chapter == self.end_chapter and self.end_verse < self.verse))):
             self.is_valid = False
             if raise_error:
                 raise InvalidReferenceException
@@ -104,7 +97,7 @@ class Reference:
 
         if not self.end_verse:
             if self.end_chapter and self.end_chapter != self.chapter:
-                self.end_verse = verses_count
+                self.end_verse = chapters[self.chapter - 1]
             else:
                 self.end_verse = self.verse
 

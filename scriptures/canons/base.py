@@ -6,7 +6,7 @@ import numpy as np
 class CanonBase:
     single_verse_re = {
         'en': 'v[.]*',
-        'fr': 'v[.]*\s*',
+        'fr': 'v[.]*\s{0,2}',
     }
 
     def __init__(self, language='en'):
