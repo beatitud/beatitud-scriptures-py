@@ -6,6 +6,7 @@ class Canon(CanonBase):
     """
     Protestant Canonical Bible with Old and New Testaments
     """
+    name = 'protestant'
     books = {
         'gen': {
             'en': ('Genesis', 'Gen', 'Gen(?:esis)?'),

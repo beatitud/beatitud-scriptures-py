@@ -7,6 +7,7 @@ class Canon(CanonBase):
     """
     Catholic Canonical Bible with Old and New Testaments
     """
+    name = 'catholic'
     books = {
         # The Pentateuch
         'gn': {

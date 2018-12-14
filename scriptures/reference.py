@@ -11,16 +11,17 @@ class InvalidReferenceException(Exception):
 
 
 class Reference:
-    def __init__(self, book=None, chapter=None, verse=None, end_chapter=None, end_verse=None, canon=get_canon()()):
+    def __init__(self, book=None, chapter=None, verse=None, end_chapter=None, end_verse=None, canon='catholic',
+                 language='fr'):
         self.book = book
         self.chapter = chapter
         self.verse = verse
         self.end_chapter = end_chapter
         self.end_verse = end_verse
-        self.language = canon.language
-        self.canon = canon
+        self.language = language
+        self.canon = get_canon(canon)(language=language)
         self.book_code = None
-        self.book_dict = None
+        self.chapters = None
         self.is_valid = None
 
     def __str__(self):
@@ -29,19 +30,17 @@ class Reference:
         if not self.is_valid:
             raise InvalidReferenceException
 
-        if ev:
+        if ev != v:
             return '{}_{}_{}-{}'.format(bc, c, v, ev)
 
         return '{}_{}_{}'.format(bc, c, v)
 
     def __repr__(self):
-        b, c, v, ec, ev = self.book, self.chapter, self.verse, self.end_chapter, self.end_verse
+        b, c, v, ec, ev, bc = self.book, self.chapter, self.verse, self.end_chapter, self.end_verse, self.chapters
         if not b:
             b = 'Unknown'
             c = '___'
             return '<Ref({0} {1}:{2})>'.format(b, c, v)
-
-        bc = self.book_dict.get('chapters')
 
         if c == ec and len(bc) == 1:  # single chapter book
             if v == ev:  # single verse
@@ -68,7 +67,7 @@ class Reference:
         Get a complete five value tuple scripture reference with full book name
         from partial data
         """
-        if not self.book_dict:
+        if not self.book_code:
             if not self.find_book(self.book):
                 self.is_valid = False
                 if raise_error:
@@ -90,12 +89,11 @@ class Reference:
                 return self.is_valid
 
         # In case of incomplete or wrong information, we raise an exception
-        chapters = self.book_dict.get('chapters')
-        chapters_count = len(chapters)
+        chapters_count = len(self.chapters)
         if (not self.chapter or self.chapter < 1 or self.chapter > chapters_count) \
-                or (self.verse and (self.verse < 1 or self.verse > chapters[self.chapter - 1])) \
+                or (self.verse and (self.verse < 1 or self.verse > self.chapters[self.chapter - 1])) \
                 or (self.end_chapter and (self.end_chapter < 1 or self.end_chapter < self.chapter or self.end_chapter > chapters_count)) \
-                or (self.end_verse and (self.end_verse < 1 or (self.end_chapter and self.end_verse > chapters[self.chapter - 1])
+                or (self.end_verse and (self.end_verse < 1 or (self.end_chapter and self.end_verse > self.chapters[self.chapter - 1])
                                         or (self.chapter == self.end_chapter and self.end_verse < self.verse))):
             self.is_valid = False
             if raise_error:
@@ -107,9 +105,18 @@ class Reference:
         if not self.verse:
             self.verse = 1
 
+        # If no end_verse is detected
         if not self.end_verse:
+            # If an end_chapter is detected, then we assign as end verse the last verse of this end chapter
             if self.end_chapter and self.end_chapter != self.chapter:
-                self.end_verse = chapters[self.chapter - 1]
+                self.end_verse = self.chapters[self.chapter - 1]
+            # Else we assign the first verse itself
+            else:
+                self.end_verse = self.verse
+
+        # If no end chapter, we assign the start chapter
+        if not self.end_chapter:
+            self.end_chapter = self.chapter
 
         self.is_valid = True
         return self.is_valid
@@ -123,9 +130,9 @@ class Reference:
 
         for book_code, book_dict in self.canon.books.items():
             if re.match('^%s$' % book_dict.get(self.language)[2], name, re.IGNORECASE):
-                self.book_dict = book_dict
-                self.book = self.book_dict.get(self.language)[0]
+                self.book = book_dict.get(self.language)[0]
                 self.book_code = book_code
+                self.chapters = book_dict.get('chapters')
                 return self.book
 
         return None

@@ -10,6 +10,7 @@ class Canon(CanonBase):
     plus the Deuteronomical books (in its Apocrypha)
     plus its additional Apocryphal books (I and II Esdras)
     """
+    name = 'kjv1611'
     books = {}
     books.update(ProtestantCanon.books)
     books.update(Deuterocanon.books)

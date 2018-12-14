@@ -6,6 +6,7 @@ class Canon(CanonBase):
     """
     Deuterocanonical Books
     """
+    name = 'deuterocanon'
     books = {
         'tob': {
             'en': ('Tobit', 'Tob', 'Tob(?:it)?'),
