@@ -5,7 +5,7 @@ setup(
     version='1.0.0',
     author='Antoine Rose',
     author_email='antoine_rose@hotmail.fr',
-    packages=['scriptures', 'scriptures/texts'],
+    packages=['scriptures', 'scriptures/canons'],
     requires=[
         'numpy'
     ],
