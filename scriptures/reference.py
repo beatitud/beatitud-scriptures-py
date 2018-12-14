@@ -111,7 +111,8 @@ class Reference:
         if not self.end_chapter:
             self.end_chapter = self.chapter
 
-        return True
+        self.is_valid = True
+        return self.is_valid
 
     def find_book(self, name):
         """

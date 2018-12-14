@@ -23,7 +23,7 @@ class Text:
             r'|\b%s(?P<single_verse>\d{1,3})?\s*'
             % (self.canon.book_re_string, self.canon.single_verse_re_string), re.IGNORECASE | re.UNICODE)
 
-    def extract_refs(self, ):
+    def extract_refs(self, guess=False):
         """
         Extract a tuple of bible references from text
         """
@@ -38,8 +38,21 @@ class Text:
             ref.validate(raise_error=False)
             self.references.append(ref)
 
+        if guess:
+            self.references = self.guess_partial_refs()
+
         return self.references
 
     def guess_partial_refs(self):
-        for ref in self.references:
-            pass
+        refs = self.references
+        for i, ref in enumerate(refs):
+            # We try to guess refs where we only have a verse number
+            if not ref.is_valid and not ref.book and not ref.chapter:
+                while not ref.is_valid:
+                    ref.book = refs[i-1].book
+                    ref.chapter = refs[i-1].chapter
+                    ref.validate(raise_error=False)
+
+            refs[i] = ref
+
+        return refs
