@@ -57,7 +57,7 @@ class Text:
                     ref.chapter = refs[index].chapter
                     ref.validate(raise_error=False)
                     index += 1
-
-            refs[i] = ref
+                if ref.is_valid:
+                    refs[i] = ref
 
         return refs
