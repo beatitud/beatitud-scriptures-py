@@ -22,12 +22,12 @@ class Reference:
         self.canon = get_canon(canon)(language=language)
         self.book_code = None
         self.chapters = None
-        self.is_valid = None
+        self.is_validated = None
 
     def __str__(self):
         b, c, v, ec, ev = self.book, self.chapter, self.verse, self.end_chapter, self.end_verse
         bc = self.book_code
-        if not self.is_valid:
+        if not self.is_validated:
             raise InvalidReferenceException
 
         if ec != c:
@@ -72,11 +72,10 @@ class Reference:
         """
         if not self.book_code:
             if not self.find_book(self.book):
-                self.is_valid = False
-                if raise_error:
-                    raise InvalidReferenceException
-                else:
-                    return self.is_valid
+                self.is_validated = False
+                if not raise_error:
+                    return self.is_validated
+                raise InvalidReferenceException
 
         # Convert to integers or leave as None
         try:
@@ -85,11 +84,10 @@ class Reference:
             self.end_chapter = int(self.end_chapter) if self.end_chapter else self.chapter
             self.end_verse = int(self.end_verse) if self.end_verse else None
         except Exception:
-            self.is_valid = False
-            if raise_error:
-                raise InvalidReferenceException
-            else:
-                return self.is_valid
+            self.is_validated = False
+            if not raise_error:
+                return self.is_validated
+            raise InvalidReferenceException
 
         # In case of incomplete or wrong information, we raise an exception
         chapters_count = len(self.chapters)
@@ -98,11 +96,10 @@ class Reference:
                 or (self.end_chapter and (self.end_chapter < 1 or self.end_chapter < self.chapter or self.end_chapter > chapters_count)) \
                 or (self.end_verse and (self.end_verse < 1 or (self.end_chapter and self.end_verse > self.chapters[self.chapter - 1])
                                         or (self.chapter == self.end_chapter and self.end_verse < self.verse))):
-            self.is_valid = False
-            if raise_error:
-                raise InvalidReferenceException
-            else:
-                return self.is_valid
+            self.is_validated = False
+            if not raise_error:
+                return self.is_validated
+            raise InvalidReferenceException
 
         # When there are no values, we set default ones
         if not self.verse:
@@ -121,8 +118,8 @@ class Reference:
         if not self.end_chapter:
             self.end_chapter = self.chapter
 
-        self.is_valid = True
-        return self.is_valid
+        self.is_validated = True
+        return self.is_validated
 
     def find_book(self, name):
         """
@@ -154,15 +151,15 @@ def guess_partial_refs(refs):
     new_refs = list()
     for i, ref in enumerate(refs):
         # We try to guess refs where we only have a verse number
-        if not ref.is_valid and not ref.book and not ref.chapter:
+        if not ref.is_validated and not ref.book and not ref.chapter:
             index = 0
-            while not ref.is_valid and index < i:
+            while not ref.is_validated and index < i:
                 ref.book = refs[index].book
                 ref.chapter = refs[index].chapter
                 ref.validate(raise_error=False)
                 index += 1
 
-        if ref.is_valid:
+        if ref.is_validated:
             new_refs.append(ref)
 
     return new_refs
@@ -173,7 +170,7 @@ def simplify_refs(refs):
     refs_dict = dict()
     for i, ref in enumerate(refs):
         # We cannot work on invalid refs
-        if not ref.is_valid:
+        if not ref.is_validated:
             continue
         # If book not already known, we initialise it
         if not refs_dict.get(ref.book):
@@ -192,12 +189,13 @@ def simplify_refs(refs):
             for v, value in enumerate(c_list):
                 if value == 1 and not ref:
                     ref = Reference(book=book, chapter=c+1, end_chapter=c+1, verse=v+1, end_verse=v+1)
-                    ref.validate()
+                    ref.validate(raise_error=False)
                 if value == 1 and ref:
                     ref.end_chapter = c + 1
                     ref.end_verse = v + 1
                 if value == 0 and ref:
-                    new_refs.append(ref)
+                    if ref.is_valid():
+                        new_refs.append(ref)
                     ref = None
 
     return new_refs

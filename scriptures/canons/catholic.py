@@ -446,14 +446,14 @@ class Canon(CanonBase):
                 [21, 22, 18]
         },
         '1jn': {
-            'en': ('I John', '1 Jn', '(?:(?:1|I)(?:\s)?)J(?:oh)?n'),
-            'fr': ('I Jean', '1 Jn', '(?:(?:1|I)(?:\s)?)J(?:ean)?n'),
+            'en': ('I John', '1 Jn', '(?:1|I)(?:\s)?J(?:oh)?n'),
+            'fr': ('I Jean', '1 Jn', '(?:1|I)(?:\s)?J(?:ea)?n'),
             'chapters':
                 [10, 29, 24, 21, 21]
         },
         '2jn': {
-            'en': ('II John', '2 Jn', '(?:(?:2|II)(?:\s)?)J(?:oh)?n'),
-            'fr': ('II Jean', '2 Jn', '(?:(?:2|II)(?:\s)?)J(?:ean)?n'),
+            'en': ('II John', '2 Jn', '(?:2|II)(?:\s)?J(?:oh)?n'),
+            'fr': ('II Jean', '2 Jn', '(?:2|II)(?:\s)?J(?:ea)?n'),
             'chapters':
                 [13]
         },
