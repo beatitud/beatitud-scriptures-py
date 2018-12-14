@@ -1,8 +1,14 @@
 from __future__ import unicode_literals
 import re
+import numpy as np
 
 
 class CanonBase:
+    single_verse_re = {
+        'en': 'v[.]*',
+        'fr': 'v[.]*\s*',
+    }
+
     def __init__(self, language='en'):
         self.language = language
 
@@ -17,27 +23,8 @@ class CanonBase:
             self.book_re_string = '|'.join(b.get(self.language)[2] for b in self.books.values())
             self.book_re = re.compile(self.book_re_string, re.IGNORECASE | re.UNICODE)
 
-            # We set the compiled scripture reference regex
-            self.scripture_re = re.compile(
-                r'\b(?P<BookTitle>%s)\s*'
-                r'(?P<ChapterNumber>\d{1,3})'
-                r'(?:\s*:\s*(?P<VerseNumber>\d{1,3}))?'
-                r'(?:\s*[-\u2013\u2014]\s*'
-                r'(?P<EndChapterNumber>\d{1,3}(?=\s*:\s*))?'
-                r'(?:\s*:\s*)?'
-                r'(?P<EndVerseNumber>\d{1,3})?'
-                r')?' % (self.book_re_string,), re.IGNORECASE | re.UNICODE)
+            self.single_verse_re_string = self.single_verse_re.get(self.language)
 
         # Otherwise we raise an error
         else:
             raise Exception('Text has no "books"')
-
-    def get_book(self, name):
-        """
-        Get a book from its name or None if not found
-        """
-        for book in self.books.values():
-            if re.match('^%s$' % book.get(self.language)[2], name, re.IGNORECASE):
-                return book
-
-        return None

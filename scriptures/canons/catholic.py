@@ -338,7 +338,7 @@ class Canon(CanonBase):
             'fr': ('Actes des apôtres', 'Ac', 'Ac(?:tes des ap[oô]tres)?'),
             'chapters':
                 [26, 47, 26, 37, 42, 15, 60, 40, 43, 48, 30, 25, 52, 28, 41, 40, 34, 28, 41, 38, 40, 30, 35, 27, 27,
-             32, 44, 31]
+                 32, 44, 31]
         },
         # New Testament Letters
         'rm': {
@@ -475,6 +475,3 @@ class Canon(CanonBase):
                 [20, 29, 22, 11, 14, 17, 17, 13, 21, 11, 19, 17, 18, 20, 8, 21, 18, 24, 21, 15, 27, 21]
         },
     }
-
-    def __int__(self):
-        print('HELLo')

@@ -6,6 +6,9 @@ setup(
     author='Antoine Rose',
     author_email='antoine_rose@hotmail.fr',
     packages=['scriptures', 'scriptures/texts'],
+    requires=[
+        'numpy'
+    ],
     data_files=[('.', ['LICENSE'])],
     license='LICENSE',
     description='bible-ref-parser-py is a python library built on top of python-scriptures library, '
