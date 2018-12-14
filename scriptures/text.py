@@ -1,7 +1,6 @@
 from scriptures.canons import get_canon
 from scriptures.reference import Reference
 import re
-import numpy as np
 
 
 class Text:
