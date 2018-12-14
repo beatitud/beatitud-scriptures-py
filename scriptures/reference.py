@@ -27,29 +27,29 @@ class Reference:
         if not b:
             b = 'Unknown'
             c = '___'
-            return '({0} {1}:{2})'.format(b, c, v)
+            return '<Ref({0} {1}:{2})>'.format(b, c, v)
 
         bc = self.book_dict.get('chapters')
 
         if c == ec and len(bc) == 1:  # single chapter book
             if v == ev:  # single verse
-                return '({0} {1})'.format(b, v)
+                return '<Ref({0} {1})>'.format(b, v)
             else:  # multiple verses
-                return '({0} {1}-{2})'.format(b, v, ev)
+                return '<Ref({0} {1}-{2})>'.format(b, v, ev)
         else:  # multi chapter book
             if c == ec:  # same start and end chapters
                 if v == 1 and ev == bc[c - 1]:  # full chapter
-                    return '({0} {1})'.format(b, c)
+                    return '<Ref({0} {1})>'.format(b, c)
                 elif v == ev:  # single verse
-                    return '({0} {1}:{2})'.format(b, c, v)
+                    return '<Ref({0} {1}:{2})>'.format(b, c, v)
                 else:  # multiple verses
-                    return '({0} {1}:{2}-{3})'.format(
+                    return '<Ref({0} {1}:{2}-{3})>'.format(
                         b, c, v, ev)
             else:  # multiple chapters
                 if v == 1 and ev == bc[ec - 1]:  # multi chapter ref
-                    return '({0} {1}-{2})'.format(b, c, ec)
+                    return '<Ref({0} {1}-{2})>'.format(b, c, ec)
                 else:  # multi-chapter, multi-verse ref
-                    return '({0} {1}:{2}-{3}:{4})'.format(b, c, v, ec, ev)
+                    return '<Ref({0} {1}:{2}-{3}:{4})>'.format(b, c, v, ec, ev)
 
     def validate(self, raise_error=True):
         """

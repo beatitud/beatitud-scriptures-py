@@ -51,12 +51,12 @@ class Text:
         for i, ref in enumerate(refs):
             # We try to guess refs where we only have a verse number
             if not ref.is_valid and not ref.book and not ref.chapter:
-                index = i
-                while not ref.is_valid and index:
-                    index -= 1
+                index = 0
+                while not ref.is_valid and index < i:
                     ref.book = refs[index].book
                     ref.chapter = refs[index].chapter
                     ref.validate(raise_error=False)
+                    index += 1
 
             refs[i] = ref
 
