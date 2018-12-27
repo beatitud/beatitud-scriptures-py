@@ -5,7 +5,7 @@ import re
 class CanonBase:
     single_verse_re = {
         'en': 'v[.]*',
-        'fr': 'v{1,2}[.]*\s{0,2}',
+        'fr': '[v]{1,2}[.]?\s{0,2}',
     }
 
     def __init__(self, language='en'):

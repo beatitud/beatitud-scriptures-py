@@ -22,7 +22,11 @@ for i, text in enumerate(texts):
     print("\n[*] Text {}".format(i+1))
     text = Text(text, language='fr', canon='catholic')
     # print(text)
-    print("\n[*] Not simplified")
+    # print("\n[*] Not Guessed")
+    # for ref in text.extract_refs(guess=False, simplify=False):
+    #     print(str(ref))
+    #
+    print("\n[*] Guessed")
     for ref in text.extract_refs(guess=True, simplify=False):
         print(str(ref))
 

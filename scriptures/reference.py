@@ -27,8 +27,8 @@ class Reference:
     def __str__(self):
         b, c, v, ec, ev = self.book, self.chapter, self.verse, self.end_chapter, self.end_verse
         bc = self.book_code
-        if not self.is_validated:
-            raise InvalidReferenceException
+        # if not self.is_validated:
+        #     raise InvalidReferenceException
 
         if ec != c:
             return '{}_{}-{}_{}-{}'.format(bc, c, ec, v, ev)
@@ -145,24 +145,6 @@ class Reference:
             return self.validate()
         except InvalidReferenceException:
             return False
-
-
-def guess_partial_refs(refs):
-    new_refs = list()
-    for i, ref in enumerate(refs):
-        # We try to guess refs where we only have a verse number
-        if not ref.is_validated and not ref.book and not ref.chapter:
-            index = 0
-            while not ref.is_validated and index < i:
-                ref.book = refs[index].book
-                ref.chapter = refs[index].chapter
-                ref.validate(raise_error=False)
-                index += 1
-
-        if ref.is_validated:
-            new_refs.append(ref)
-
-    return new_refs
 
 
 def simplify_refs(refs):

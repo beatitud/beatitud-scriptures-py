@@ -28,7 +28,12 @@ Reference(book='Rom', chapter=3, verse=23).is_valid()
 # True
 ````
 
-Single verse number references can be guessed, according to what is initially mentioned in the text.
+Single verse number references can be guessed, according to three rules:
+- If there is a complete reference in the same sentence, before, we suppose the single verse refers to the same books and chapters than this complete reference
+- Else, if there is a complete reference in the same paragraph, before, we suppose the single verse refers to the same books and chapters than this complete reference
+- Else, if there is a complete reference in the text, in the previous paragraphs, we suppose the single verse refers to those books and chapters
+
+
 ````python
 from scriptures.text import Text
 string = "Les disciples « sortirent à la rencontre de l’époux » (Mt 25, 1). Puis : « Voici l’époux, sortez à sa rencontre ! » (v. 6)." 
@@ -143,7 +148,7 @@ print(cc.books)
 Custom Canons
 ============
 
-As of v3.0.0, the library makes makes extending the library through custom texts
+The library makes makes extending the library through custom texts
 trivial through additional modules.  Please consider contributing your text
 modules to this project by creating canons under scriptures/canons/ and submitting
 a pull request.
