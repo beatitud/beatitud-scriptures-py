@@ -1,14 +1,15 @@
 import unittest
 
-from .. import normalize_reference, scripture_re, reference_to_string
 
 def f(txt):
     """
     accept a string containing a scripture reference, normalize it, and then
     return the reformatted string
     """
-    return reference_to_string(
-            *normalize_reference(*scripture_re.match(txt).groups()))
+    from scriptures.reference import Reference
+    ref = Reference(txt, canon='protestant', language='en')
+    return ref.to_string(full_name=True)
+
 
 class TestBookNames(unittest.TestCase):
     def setUp(self):

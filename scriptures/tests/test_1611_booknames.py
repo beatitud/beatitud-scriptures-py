@@ -1,17 +1,14 @@
 import unittest
 
-from ..canons.kjv1611 import KingJames1611
-
-kjv1611 = KingJames1611()
-
 
 def f(txt):
     """
     accept a string containing a scripture reference, normalize it, and then
     return the reformatted string
     """
-    return kjv1611.reference_to_string(
-            *kjv1611.normalize_reference(*kjv1611.scripture_re.match(txt).groups()))
+    from scriptures.reference import Reference
+    ref = Reference(txt, canon='kjv1611', language='en')
+    return ref.to_string(full_name=True)
 
 
 class Test1611BookNames(unittest.TestCase):

@@ -11,23 +11,23 @@ class Text:
         self.references = None
 
         # We set the compiled regex to extract refs in text
-        self.scripture_re = re.compile(
+        self.__scripture_re = re.compile(
             r'\b(?P<book>%s)\s*'
             r'(?P<chapter>\d{1,3})'
             r'(?:\s*[:,]\s*(?P<verse>\d{1,3}))?'
             r'(?:\w?\s*[-]\s*'
-            r'(?P<end_chapter>\d{1,3}(?=\s*:\s*))?'
-            r'(?:\s*:\s*)?'
+            r'(?P<end_chapter>\d{1,3}(?=\s*[:,]\s*))?'
+            r'(?:\s*[:,]\s*)?'
             r'(?P<end_verse>\d{1,3})?'
             r')?'
             r'|%s(?P<single_verse>\d{1,3})\s?(?:\s?-\s?(?P<single_verse_end>\d{1,3}))?'
             % (self.canon.book_re_string, self.canon.single_verse_re_string), re.IGNORECASE | re.UNICODE)
 
-        self.sentence_end_markup = '<sentence_end>'
-        self.sentence_end_re = re.compile(r'\([^\)]*\)|(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)(\s)')
+        self.__sentence_end_markup = '<sentence_end>'
+        self.__sentence_end_re = re.compile(r'\([^\)]*\)|(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)(\s)')
 
-        self.paragraph_end_markup = '<paragraph_end>'
-        self.paragraph_end_re = re.compile(r'\n+')
+        self.__paragraph_end_markup = '<paragraph_end>'
+        self.__paragraph_end_re = re.compile(r'\n+')
 
     def __repr__(self):
         return self.text
@@ -41,22 +41,22 @@ class Text:
         """
         if guess:
             # We first detect paragraphs and add markups
-            marked_text = re.sub(self.paragraph_end_re, self.paragraph_end_markup, self.text)
+            marked_text = re.sub(self.__paragraph_end_re, self.__paragraph_end_markup, self.text)
 
             # Then we detect sentences and add markups
-            marked_text = re.sub(self.sentence_end_re, self.replace_sen_re, marked_text)
+            marked_text = re.sub(self.__sentence_end_re, self.__replace_sen_re, marked_text)
 
             self.references = list()
-            for paragraph in marked_text.split(self.paragraph_end_markup):
+            for paragraph in marked_text.split(self.__paragraph_end_markup):
                 paragraph_refs = list()
-                for sentence in paragraph.split(self.sentence_end_markup):
+                for sentence in paragraph.split(self.__sentence_end_markup):
                     sentence_refs = list()
                     # If empty string, we skip
                     if not sentence:
                         continue
 
                     # Else we look for refs in sentence
-                    refs = self.find_refs(sentence, valid_only=False)
+                    refs = self.__find_refs(sentence, valid_only=False)
                     for ref in refs:
                         # If we find partial ref, and we already have a valid ref in sentence, we attribute
                         # same book and chapter
@@ -87,16 +87,16 @@ class Text:
                 self.references += paragraph_refs
 
         if not guess:
-            self.references = self.find_refs(self.text, valid_only=True)
+            self.references = self.__find_refs(self.text, valid_only=True)
 
         if simplify:
             self.references = simplify_refs(self.references)
 
         return self.references
 
-    def find_refs(self, text, valid_only=False):
+    def __find_refs(self, text, valid_only=False):
         references = list()
-        for r in re.finditer(self.scripture_re, text):
+        for r in re.finditer(self.__scripture_re, text):
             ref_params = r.groupdict()
             if not ref_params.get('verse'):
                 ref_params['verse'] = ref_params.pop('single_verse', None)
@@ -113,7 +113,7 @@ class Text:
 
         return references
 
-    def replace_sen_re(self, match):
+    def __replace_sen_re(self, match):
         if not match.groups()[0]:
             return match.group(0)
-        return self.sentence_end_markup
+        return self.__sentence_end_markup

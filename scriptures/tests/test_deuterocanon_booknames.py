@@ -1,17 +1,14 @@
 import unittest
 
-from ..canons.deuterocanon import Deuterocanon
-
-dc = Deuterocanon()
-
 
 def f(txt):
     """
     accept a string containing a scripture reference, normalize it, and then
     return the reformatted string
     """
-    return dc.reference_to_string(
-            *dc.normalize_reference(*dc.scripture_re.match(txt).groups()))
+    from scriptures.reference import Reference
+    ref = Reference(txt, canon='deuterocanon', language='en')
+    return ref.to_string(full_name=True)
 
 
 class TestDeuterocanonBookNames(unittest.TestCase):
