@@ -5,7 +5,7 @@ bible-ref-py is a Python 2 and Python 3 compatible package and regular
 expression library for validating, extracting and normalizing biblical
 references from texts.
 
-bible-ref-py is built on top of python-scriptures library, implemented by 
+bible-ref-py is built on top of python-scriptures library, initially implemented by 
 [David Davis](http://www.davisd.com/projects/python-scriptures/) (Copyright (c) 2010-2015). His email : [davisd@davisd.com](mailto:davisd@davisd.com).
 
 
@@ -45,10 +45,9 @@ text.extract_refs(guess=True)
 Installation
 ============
 
-A setup script (setup.py) is provided.  To install, simply run the script with
-the install command:
+To install, simply run the script with the install command:
 ````shell
-$ pip install git+https://github.com/beatitud/bible-ref-parser-py.git@master
+$ pip install bible-ref-py
 ````
 
 Or just put the scriptures package somewhere on the Python path.
