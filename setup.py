@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='bible-ref-parser-py',
-    version='1.0.0',
+    version='4.0.0',
     author='Antoine Rose',
     author_email='antoine_rose@hotmail.fr',
     packages=['scriptures', 'scriptures/canons'],
