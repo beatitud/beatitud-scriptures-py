@@ -1,11 +1,11 @@
-# bible-ref-parser-py
+# bible-ref-py
 
 
-bible-ref-parser-py is a Python 2 and Python 3 compatible package and regular
+bible-ref-py is a Python 2 and Python 3 compatible package and regular
 expression library for validating, extracting and normalizing biblical
 references from texts.
 
-bible-ref-parser-py is built on top of python-scriptures library, implemented by 
+bible-ref-py is built on top of python-scriptures library, implemented by 
 [David Davis](http://www.davisd.com/projects/python-scriptures/) (Copyright (c) 2010-2015). His email : [davisd@davisd.com](mailto:davisd@davisd.com).
 
 
