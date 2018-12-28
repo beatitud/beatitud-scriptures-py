@@ -1,15 +1,15 @@
-# bible-ref-py
+# beatitud-scriptures-py
 
 
-bible-ref-py is a Python 2 and Python 3 compatible package and regular
+beatitud-scriptures-py is a Python 2 and Python 3 compatible package and regular
 expression library for validating, extracting and normalizing biblical
 references from texts.
 
-bible-ref-py is built on top of python-scriptures library, initially implemented by 
-[David Davis](http://www.davisd.com/projects/python-scriptures/) (Copyright (c) 2010-2015). His email : [davisd@davisd.com](mailto:davisd@davisd.com).
+beatitud-scriptures-py is built by [Beatitud developers](https://github.com/beatitud/), on top of python-scriptures library, initially implemented by 
+[David Davis](http://www.davisd.com/projects/python-scriptures/) (Copyright (c) 2010-2015).
 
 
-Typical usage is as follows::
+Typical usage is as follows:
 ````python
 from scriptures.text import Text
 string = "Le service est le billet à présenter à l’entrée des noces éternelles. Ce qui reste de la vie au seuil de l’éternité, ce n’est pas ce que nous avons gagné, mais ce que nous avons donné (cf. Mt 6, 19-21 ; 1Co 13, 8)"
@@ -47,7 +47,7 @@ Installation
 
 To install, simply run the script with the install command:
 ````shell
-$ pip install bible-ref-py
+$ pip install beatitud-scriptures
 ````
 
 Or just put the scriptures package somewhere on the Python path.

@@ -1,9 +1,9 @@
 README.md
 setup.py
-bible_ref_py.egg-info/PKG-INFO
-bible_ref_py.egg-info/SOURCES.txt
-bible_ref_py.egg-info/dependency_links.txt
-bible_ref_py.egg-info/top_level.txt
+beatitud_scriptures.egg-info/PKG-INFO
+beatitud_scriptures.egg-info/SOURCES.txt
+beatitud_scriptures.egg-info/dependency_links.txt
+beatitud_scriptures.egg-info/top_level.txt
 scriptures/__init__.py
 scriptures/reference.py
 scriptures/text.py

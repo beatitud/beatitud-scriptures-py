@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 setup(
-    name='bible-ref-py',
+    name='beatitud-scriptures',
     version='4.0.0',
     author='Antoine Rose',
     author_email='antoine_rose@hotmail.fr',
@@ -9,8 +9,9 @@ setup(
     include_package_data=True,
     install_requires=open("./requirements.pip").readlines(),
     license='MIT',
-    description='bible-ref-py is a python library built on top of python-scriptures library, '
-                'implemented by David Davis <davisd@davisd.com> (Copyright (c) 2010-2015). It is a Python '
+    description='bible-ref-py is a python library implemented by Beatitud Developers, '
+                'built on top of python-scriptures library, '
+                'initially implemented by David Davis (Copyright (c) 2010-2015). It is a Python '
                 'package and regular expression library for validating, extracting, and normalizing '
                 'biblical references from text.',
     long_description=open("README.md", "r").read(),
