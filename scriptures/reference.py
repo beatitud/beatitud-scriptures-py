@@ -143,6 +143,7 @@ class Reference:
 
         # If the book is containing a single chapter, and if we have no verse and only a chapter, we
         # assign chapter value to verse value
+        # For instance, Jude 2-6 should be understood as Jude 1:2-6, because we don't even mention chapter
         if len(self.chapters) == 1:
             if not self.verse and self.chapter:
                 self.verse = self.chapter
