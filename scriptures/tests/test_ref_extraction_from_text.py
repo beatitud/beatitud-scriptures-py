@@ -13,7 +13,7 @@ class TestRefExtractionFromText(unittest.TestCase):
         pass
 
     def test_extraction_with_guess(self):
-        self.assertEqual(f("""
+        refs = f("""
 Chers frères et sœurs, bonjour!
 
 L’Evangile de ce dimanche (cf. Mc 10, 2-16) nous offre la parole de Jésus sur le mariage. Le récit commence par la provocation des pharisiens qui demandent à Jésus s’il est licite pour un mari de répudier sa femme, comme le prévoyait la loi de Moïse (cf. vv. 2- 4). Tout d’abord, Jésus, avec la sagesse et l’autorité qui lui viennent du Père, redimensionne la prescription mosaïque en disant: «C’est en raison de votre dureté de cœur qu’il — c’est-à-dire l’ancien législateur — a écrit pour vous cette prescription» (v. 5). Autrement dit, il s’agit d’une concession servant à atténuer les failles produites par notre égoïsme, mais elle ne correspond pas à l’intention originelle du Créateur.
@@ -39,9 +39,12 @@ Je vous salue tous avec affection, romains et pèlerins, en particulier les fami
 
 Je souhaite à tous un bon dimanche. S’il vous plaît, n’oubliez pas de prier pour moi. Bon déjeuner et au revoir!
 
-"""), ['mc_10:2-16', 'mc_10:2-4', 'mc_10:5', 'mc_10:6-7', 'mc_10:9'])
+""")
+        expected_refs = ['mc_10:2-16', 'mc_10:2-4', 'mc_10:5', 'mc_10:6-7', 'mc_10:9']
+        for index in range(len(refs)):
+            self.assertEqual(refs[index], expected_refs[index])
 
-        self.assertEqual(f("""Chers frères et sœurs, bonjour!
+        refs = f("""Chers frères et sœurs, bonjour!
 
 La page de l’Evangile d’aujourd’hui (cf. Mc 10, 35-45) décrit Jésus qui, encore une fois et avec une grande patience, cherche à corriger ses disciples en les convertissant de la mentalité du monde à celle de Dieu. L’occasion lui en est donnée par les frères Jacques et Jean, deux des premiers que Jésus a rencontrés et appelés à le suivre. Désormais, ils ont parcouru un long chemin avec lui et ils appartiennent précisément au groupe des douze apôtres. C’est pourquoi, alors qu’ils sont en chemin vers Jérusalem, où les disciples espèrent avec impatience que Jésus, à l’occasion de Pâques, instaurera finalement le Royaume de Dieu, les deux frères s’arment de courage, s’approchent et adressent leur requête au Maître: «Accorde-nous de siéger, l’un à ta droite et l’autre à ta gauche, dans ta gloire» (v. 37).
 
@@ -62,9 +65,12 @@ Je vous salue à présent tous, pèlerins provenant d’Italie et de divers pays
 
 J’adresse une pensée spéciale au groupe de la Caritas Internationalis, guidé par le président, le cardinal Luís Antonio Tagle, avec des évêques et des personnes provenant de divers pays du monde. Vous avez accompli un bref pèlerinage à Rome, pour exprimer le désir de marcher ensemble en apprenant ainsi à mieux vous connaître. J’encourage cette initiative de «partager le chemin», qui est promue dans de nombreuses villes et qui peut transformer notre rapport avec les migrants. Merci beaucoup à la Caritas!
 
-Et je souhaite à tous un bon dimanche. S’il vous plaît, n’oubliez pas de prier pour moi. Bon déjeuner et au revoir."""), ["mc_10:35-45", "mc_10:37", "mc_10:38", "mc_10:40", "mc_10:42-44", "mc_10:45"])
+Et je souhaite à tous un bon dimanche. S’il vous plaît, n’oubliez pas de prier pour moi. Bon déjeuner et au revoir.""")
+        expected_refs = ["mc_10:35-45", "mc_10:37", "mc_10:38", "mc_10:40", "mc_10:42-44", "mc_10:45"]
+        for index in range(len(refs)):
+            self.assertEqual(refs[index], expected_refs[index])
 
-        self.assertEqual(f("""
+        refs = f("""
          Chers frères et sœurs, bonjour!
 
 La solennité de Jésus Christ Roi de l’univers, que nous célébrons aujourd’hui, est placée au terme de l’année liturgique et rappelle que la vie de la création n’avance pas au hasard, mais procède vers une destination finale: la manifestation définitive du Christ, Seigneur de l’histoire et de toute la création. La conclusion de l’histoire sera son règne éternel. Le passage évangélique du jour (cf. Jn 18, 33b-37) nous parle de ce royaume, le royaume du Christ, le royaume de Jésus, en racontant la situation humiliante dans laquelle s’est trouvé Jésus après avoir été arrêté au Gethsémani: attaché, insulté, accusé et conduit devant les autorités de Jérusalem. Il est ensuite présenté au procureur romain, comme quelqu’un qui attente au pouvoir politique, pour devenir le roi des juifs. Pilate fait alors son enquête et, dans un interrogatoire dramatique, il lui demande à deux reprises s’Il est roi (cf. vv. 33b.37).
@@ -84,9 +90,12 @@ Chers frères et sœurs, hier l’Ukraine a commémoré l’anniversaire de l’
 
 Je vous salue tous, pèlerins venus d’Italie et de divers pays: les familles, les groupes paroissiaux, les associations. Je salue les participants au congrès sur la fertilité, promu par l’université catholique du Sacré-Cœur pour le 50e anniversaire de l’encyclique  Humanae vitae de saint Paul VI.
 
-Je souhaite à tous un bon dimanche. Et s’il vous plaît, n’oubliez pas de prier pour moi. Bon déjeuner et au revoir!"""), ["jn_18:33-37", "jn_18:33", "jn_18:36", "jn_18:37", "jn_6:5-15", "jn_18:36", "jn_18:37", "1jn_4:8"])
+Je souhaite à tous un bon dimanche. Et s’il vous plaît, n’oubliez pas de prier pour moi. Bon déjeuner et au revoir!""")
+        expected_refs = ["jn_18:33-37", "jn_18:33", "jn_18:36", "jn_18:37", "jn_6:5-15", "jn_18:36", "jn_18:37", "1jn_4:8"]
+        for index in range(len(refs)):
+            self.assertEqual(refs[index], expected_refs[index])
 
-        self.assertEqual(f("""
+        refs = f("""
 Chers frères et sœurs, bonjour !
 
 En poursuivant ces catéchèses sur la famille, je voudrais aujourd’hui parler des fiançailles. Les fiançailles — on l’entend dans le mot — ont un rapport avec la confiance, la familiarité, la fiabilité. Familiarité avec la vocation que Dieu donne, car le mariage est tout d’abord la découverte d’un appel de Dieu. C’est certainement une belle chose que les jeunes puissent aujourd’hui choisir de se marier sur la base d’un amour réciproque. Mais la liberté du lien demande précisément une harmonie consciente de la décision, pas seulement une simple entente due à l’attraction ou au sentiment, pour un moment, un temps bref... Cela demande un parcours.
@@ -105,9 +114,12 @@ Je salue cordialement les pèlerins de langue française, en particulier les pè
 
 Je prie spécialement pour tous ceux qui se préparent au mariage, et j’invite les communautés chrétiennes à les encourager et à les aider dans l’accomplissement de leur généreux projet.
 
-Que Dieu vous bénisse."""), ["gn_1:31", "os_2:21-22"])
+Que Dieu vous bénisse.""")
+        expected_refs = ["gn_1:31", "os_2:21-22"]
+        for index in range(len(refs)):
+            self.assertEqual(refs[index], expected_refs[index])
 
-        self.assertEqual(f("""
+        refs = f("""
 Chers frères et sœurs, bonjour.
 
 Dans le Credo, immédiatement après avoir professé la foi dans le Saint-Esprit, nous disons : « Je crois en l’Église une, sainte, catholique et apostolique ». Il y a un lien profond entre ces deux réalités de foi : c’est le Saint-Esprit, en effet, qui donne vie à l’Église, guide ses pas. Sans la présence et l’action incessante du Saint-Esprit, l’Église ne pourrait pas vivre et ne pourrait accomplir le devoir que Jésus Ressuscité lui a confié d’aller et de faire des disciples de toutes les nations (cf. Mt 28, 18). Évangéliser est la mission de l’Église, pas seulement de certains, mais la mienne, la tienne, notre mission. L’apôtre Paul s’exclamait : « Malheur à moi si je n’annonce pas l’Évangile ! » (1 Co 9, 16). Chacun doit être évangélisateur, surtout à travers sa vie ! Paul VI soulignait qu’« évangéliser... est la grâce et la vocation propre de l’Église, son identité la plus profonde. Elle existe pour évangéliser » (Exhort. ap.  Evangelii nuntiandi, n. 14).
@@ -134,7 +146,10 @@ J’invite tous les catholiques du monde à s’unir en prière avec nos frères
 
 En faisant nôtres plusieurs mots de la prière à la Vierge de Sheshan, je voudrais ainsi invoquer Marie avec vous : « Notre-Dame de Sheshan, soutiens l’engagement de ceux qui en Chine, malgré les difficultés quotidiennes, continuent à croire, à espérer, à aimer, afin qu’ils ne craignent jamais de parler de Jésus au monde et du monde à Jésus ».
 
-Que Marie, Vierge fidèle, soutienne les catholiques chinois, rende leurs engagements difficiles toujours plus précieux aux yeux du Seigneur, et qu’elle fasse grandir l’affection et la participation de l’Église qui est en Chine au chemin de l’Église universelle."""), ["mt_28:18", "1co_9:16", "ac_2:3-4", "ac_2:11", "ac_2:5", "ac_2:6", "gn_11:4", "rm_5:5", "jn_13:34-35", "ac_2:14", "ac_2:29"])
+Que Marie, Vierge fidèle, soutienne les catholiques chinois, rende leurs engagements difficiles toujours plus précieux aux yeux du Seigneur, et qu’elle fasse grandir l’affection et la participation de l’Église qui est en Chine au chemin de l’Église universelle.""")
+        expected_refs = ["mt_28:18", "1co_9:16", "ac_2:3-4", "ac_2:11", "ac_2:5", "ac_2:6", "gn_11:4", "rm_5:5", "jn_13:34-35", "ac_2:14", "ac_2:29"]
+        for index in range(len(refs)):
+            self.assertEqual(refs[index], expected_refs[index])
 
 # text = "(Jn 17, 21) " + \
 #        "(1 P 3, 8) " + \

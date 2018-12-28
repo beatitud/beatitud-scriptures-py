@@ -56,7 +56,7 @@ class Text:
                         continue
 
                     # Else we look for refs in sentence
-                    refs = self.__find_refs(sentence, valid_only=False)
+                    refs = self.find_refs(sentence, valid_only=False)
                     for ref in refs:
                         # If we find partial ref, and we already have a valid ref in sentence, we attribute
                         # same book and chapter
@@ -87,25 +87,38 @@ class Text:
                 self.references += paragraph_refs
 
         if not guess:
-            self.references = self.__find_refs(self.text, valid_only=True)
+            self.references = self.find_refs(self.text, valid_only=True)
 
         if simplify:
             self.references = simplify_refs(self.references)
 
         return self.references
 
-    def __find_refs(self, text, valid_only=False):
+    def find_refs(self, text, valid_only=False):
         references = list()
         for r in re.finditer(self.__scripture_re, text):
             ref_params = r.groupdict()
-            if not ref_params.get('verse'):
-                ref_params['verse'] = ref_params.pop('single_verse', None)
-            if not ref_params.get('end_verse'):
-                ref_params['end_verse'] = ref_params.pop('single_verse_end', None)
+
+            # When we have sth like John 5-6, which is supposed to be chapter 5 to chapter 6,
+            # end_chapter is captured by end_verse, so we have to correct it
+            if not ref_params.get('verse') and not ref_params.get('end_chapter') and ref_params.get('end_verse'):
+                ref_params['end_chapter'] = ref_params.pop('end_verse')
+
+            # If no verse detected, we assign the value of the single verse detected in case we detected sth
+            if not ref_params.get('verse') and ref_params.get('single_verse', None):
+                ref_params['verse'] = ref_params.get('single_verse')
+
+            if not ref_params.get('end_verse') and ref_params.get('single_verse_end', None):
+                ref_params['end_verse'] = ref_params.get('single_verse_end')
+
+            # Then we remove useless extra keys
             ref_params.pop('single_verse', None)
             ref_params.pop('single_verse_end', None)
+
             ref_params['canon'] = self.canon.name
             ref_params['language'] = self.language
+
+            # We initialize ref object with given values and risk a validation
             ref = Reference(**ref_params)
             ref.validate(raise_error=False)
             if (valid_only and ref.is_validated) or not valid_only:

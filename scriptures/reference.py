@@ -3,11 +3,16 @@ import re
 from scriptures.canons import get_canon
 
 
-class InvalidReferenceException(Exception):
+class InvalidReferenceError(Exception):
     """
     Invalid Reference Exception
     """
-    pass
+    def __init__(self, message, errors=None):
+        # Call the base class constructor with the parameters it needs
+        super(InvalidReferenceError, self).__init__(message)
+
+        # Now for your custom code...
+        self.errors = errors
 
 
 class Reference:
@@ -32,9 +37,18 @@ class Reference:
     def __repr__(self):
         return self.to_string(full_name=True, repr=True)
 
+    def to_tuple(self):
+        return self.book, self.chapter, self.verse, self.end_chapter, self.end_verse
+
+    def to_string_tuple(self):
+        return '%s, %s, %s, %s, %s' % self.to_tuple()
+
     def to_string(self, full_name=False, repr=False):
-        b, c, v, ec, ev, bc = self.book_code if not full_name else self.book, self.chapter, \
-                              self.verse, self.end_chapter, self.end_verse, self.chapters
+        b, c, v, ec, ev = self.to_tuple()
+        bc = self.chapters
+
+        if not full_name:
+            b = self.book_code
 
         # If unknown book
         if not b:
@@ -43,9 +57,11 @@ class Reference:
             string = '{0} {1}:{2}'.format(b, c, v)
 
         # If book containing a single chapter
-        elif c == ec and len(bc) == 1:
+        elif len(bc) == 1:
             if v == ev:  # single verse
                 string = '{0} {1}'.format(b, v)
+            elif v == 1 and ev == bc[c - 1]:  # verses covering whole chapter
+                string = '{0}'.format(b)
             else:  # multiple verses
                 string = '{0} {1}-{2}'.format(b, v, ev)
 
@@ -85,16 +101,15 @@ class Reference:
         # We try to extract ref from string
         from .text import Text
         t = Text(string, language=self.language, canon=self.canon.name)
-        refs = t.extract_refs(guess=False, simplify=False)
+        refs = t.find_refs(string, valid_only=False)
 
         # If we don't find exactly one ref, we raise an error
         if not len(refs) == 1:
-            raise InvalidReferenceException
+            raise InvalidReferenceError("We found {} ref(s) in string: exactly one is required!".format(len(refs)))
 
         # Else, we use the ref we found, import params, and validate it
         ref = refs[0]
-        self.book, self.chapter, self.verse, self.end_chapter, self.end_verse = \
-            ref.book, ref.chapter, ref.verse, ref.end_chapter, ref.end_verse
+        self.book, self.chapter, self.verse, self.end_chapter, self.end_verse = ref.to_tuple()
         self.validate(raise_error=True)
 
     def validate(self, raise_error=True):
@@ -108,22 +123,36 @@ class Reference:
                 self.is_validated = False
                 if not raise_error:
                     return self.is_validated
-                raise InvalidReferenceException
+                raise InvalidReferenceError("No book matched!\n"
+                                            "***\n"
+                                            "Book is: {}".format(self.book))
 
         # We convert to integers or leave as None
         try:
             self.chapter = int(self.chapter) if self.chapter else None
             self.verse = int(self.verse) if self.verse else None
-            self.end_chapter = int(self.end_chapter) if self.end_chapter else self.chapter
+            self.end_chapter = int(self.end_chapter) if self.end_chapter else None
             self.end_verse = int(self.end_verse) if self.end_verse else None
         except Exception:
             self.is_validated = False
             if not raise_error:
                 return self.is_validated
-            raise InvalidReferenceException
+            raise InvalidReferenceError("Could not retrieve integer values!\n"
+                                        "***\n"
+                                        "Reference is: {}".format(self.to_string_tuple()))
 
-        b, c, v, ec, ev, bc = self.book, self.chapter, \
-                              self.verse, self.end_chapter, self.end_verse, self.chapters
+        # If the book is containing a single chapter, and if we have no verse and only a chapter, we
+        # assign chapter value to verse value
+        if len(self.chapters) == 1:
+            if not self.verse and self.chapter:
+                self.verse = self.chapter
+            if not self.end_verse and self.end_chapter:
+                self.end_verse = self.end_chapter
+            self.chapter = 1
+            self.end_chapter = 1
+
+        b, c, v, ec, ev = self.to_tuple()
+        bc = self.chapters
 
         # If there is no chapter number, or an invalid chapter number
         # Or if there is an invalid verse number
@@ -133,24 +162,30 @@ class Reference:
         if (not c or c < 1 or c > len(bc)) \
                 or (v and (v < 1 or v > bc[c - 1])) \
                 or (ec and (ec < 1 or ec < c or ec > len(bc))) \
-                or (ev and (not v or ev < 1 or (ec and ev > bc[ec - 1]) or (c == ec and ev < v))):
+                or (ev and (ev < 1 or (ec and ev > bc[ec - 1])))\
+                or (ev and v and (c == ec and ev < v)):
             self.is_validated = False
             if not raise_error:
                 return self.is_validated
-            raise InvalidReferenceException
+            raise InvalidReferenceError('An invalid number among chapters or verses was detected!\n'
+                                        '***\n'
+                                        'Reference is: {}'.format(self.to_string_tuple()))
 
         # If no end chapter, we assign chapter itself
         if not ec:
             self.end_chapter = c
             ec = self.end_chapter
 
-        # If there is no verse number, we assume that the whole chapter is pointed  out, and
-        # we assign 1 to the verse, and the last verse of the last chapter to the end verse
+        # If there is no verse number, we assume that the chapter from the beginning is pointed out, and
+        # we assign 1 to the verse
         if not v:
             self.verse = 1
-            self.end_verse = bc[ec - 1]
             v = self.verse
-            ev = self.end_verse
+
+            # If no end verse, we assume the whole chapter is pointed out
+            if not self.end_verse:
+                self.end_verse = bc[ec - 1]
+                ev = self.end_verse
 
         # Else if no end verse is specified, we assign the first verse itself
         elif not ev:
@@ -181,7 +216,7 @@ class Reference:
         """
         try:
             return self.validate()
-        except InvalidReferenceException:
+        except InvalidReferenceError:
             return False
 
 

@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from scriptures.canons.base import CanonBase
-from .protestant import ProtestantCanon
-from .deuterocanon import Deuterocanon
+from .protestant import Canon as ProtestantCanon
+from .deuterocanon import Canon as Deuterocanon
 
 
 class Canon(CanonBase):
