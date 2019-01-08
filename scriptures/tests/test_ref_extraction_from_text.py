@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import unittest
 
 
@@ -41,8 +42,7 @@ Je souhaite à tous un bon dimanche. S’il vous plaît, n’oubliez pas de prie
 
 """)
         expected_refs = ['mc_10:2-16', 'mc_10:2-4', 'mc_10:5', 'mc_10:6-7', 'mc_10:9']
-        for index in range(len(refs)):
-            self.assertEqual(refs[index], expected_refs[index])
+        self.assertEqual(refs, expected_refs)
 
         refs = f("""Chers frères et sœurs, bonjour!
 
@@ -67,8 +67,7 @@ J’adresse une pensée spéciale au groupe de la Caritas Internationalis, guid�
 
 Et je souhaite à tous un bon dimanche. S’il vous plaît, n’oubliez pas de prier pour moi. Bon déjeuner et au revoir.""")
         expected_refs = ["mc_10:35-45", "mc_10:37", "mc_10:38", "mc_10:40", "mc_10:42-44", "mc_10:45"]
-        for index in range(len(refs)):
-            self.assertEqual(refs[index], expected_refs[index])
+        self.assertEqual(refs, expected_refs)
 
         refs = f("""
          Chers frères et sœurs, bonjour!
@@ -92,8 +91,7 @@ Je vous salue tous, pèlerins venus d’Italie et de divers pays: les familles, 
 
 Je souhaite à tous un bon dimanche. Et s’il vous plaît, n’oubliez pas de prier pour moi. Bon déjeuner et au revoir!""")
         expected_refs = ["jn_18:33-37", "jn_18:33", "jn_18:36", "jn_18:37", "jn_6:5-15", "jn_18:36", "jn_18:37", "1jn_4:8"]
-        for index in range(len(refs)):
-            self.assertEqual(refs[index], expected_refs[index])
+        self.assertEqual(refs, expected_refs)
 
         refs = f("""
 Chers frères et sœurs, bonjour !
@@ -116,8 +114,7 @@ Je prie spécialement pour tous ceux qui se préparent au mariage, et j’invite
 
 Que Dieu vous bénisse.""")
         expected_refs = ["gn_1:31", "os_2:21-22"]
-        for index in range(len(refs)):
-            self.assertEqual(refs[index], expected_refs[index])
+        self.assertEqual(refs, expected_refs)
 
         refs = f("""
 Chers frères et sœurs, bonjour.
@@ -148,8 +145,13 @@ En faisant nôtres plusieurs mots de la prière à la Vierge de Sheshan, je voud
 
 Que Marie, Vierge fidèle, soutienne les catholiques chinois, rende leurs engagements difficiles toujours plus précieux aux yeux du Seigneur, et qu’elle fasse grandir l’affection et la participation de l’Église qui est en Chine au chemin de l’Église universelle.""")
         expected_refs = ["mt_28:18", "1co_9:16", "ac_2:3-4", "ac_2:11", "ac_2:5", "ac_2:6", "gn_11:4", "rm_5:5", "jn_13:34-35", "ac_2:14", "ac_2:29"]
-        for index in range(len(refs)):
-            self.assertEqual(refs[index], expected_refs[index])
+        self.assertEqual(refs, expected_refs)
+
+        refs = f("""
+        « Brûler sa vie pour de nobles causes » : voilà une opportunité offerte aux jeunes d’aujourd’hui, qui, immergés dans une « culture du consumérisme » et « du narcissisme », sont souvent insatisfaits et peu heureux. Le Pape François a placé au centre de sa réflexion le témoignage des missionnaires — « la gloire de notre Église » — en la proposant comme modèle pour les jeunes. L’homélie du Souverain Pontife s’est inspirée de la première lecture du jour extraite des Actes des apôtres (20, 17-27), dans laquelle l’on peut lire ce que « nous pourrions appeler le “départ d’un apôtre” ». Cet extrait des Écritures fait venir à l’esprit « le beau passage littéraire de l’Espagnol José María Pemán », dans lequel on lit « la description du congé de la vie de saint François-Xavier devant les plages de la Chine. Lui aussi fait un examen de conscience : seul, devant Dieu ». La suite du récit est aussi significative, car l’on peut se demander : « Qu’est-ce qui attend Paul ? ». En effet, l’apôtre écrit qu’il « va à Jérusalem “sans savoir ce qui [lui] y adviendra” ».
+        """)
+        expected_refs = ["ac_20:17-27"]
+        self.assertEqual(refs, expected_refs)
 
 # text = "(Jn 17, 21) " + \
 #        "(1 P 3, 8) " + \

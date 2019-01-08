@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from scriptures.canons import get_canon
 from scriptures.reference import Reference, simplify_refs
 import re
@@ -12,7 +13,7 @@ class Text:
 
         # We set the compiled regex to extract refs in text
         self.__scripture_re = re.compile(
-            r'\b(?P<book>%s)\s*'
+            r'\b(?P<book>%s)\s*\(?\s*'
             r'(?P<chapter>\d{1,3})'
             r'(?:\s*[:,]\s*(?P<verse>\d{1,3}))?'
             r'(?:\w?\s*[-]\s*'
@@ -20,8 +21,9 @@ class Text:
             r'(?:\s*[:,]\s*)?'
             r'(?P<end_verse>\d{1,3})?'
             r')?'
+            r'\s*\)?'
             r'|%s(?P<single_verse>\d{1,3})\s?(?:\s?-\s?(?P<single_verse_end>\d{1,3}))?'
-            % (self.canon.book_re_string, self.canon.single_verse_re_string), re.IGNORECASE | re.UNICODE)
+            % (self.canon.book_re_string, self.canon.single_verse_re_string), flags=re.IGNORECASE | re.UNICODE)
 
         self.__sentence_end_markup = '<sentence_end>'
         self.__sentence_end_re = re.compile(r'\([^\)]*\)|(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)(\s)')

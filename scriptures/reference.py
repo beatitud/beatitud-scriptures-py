@@ -100,7 +100,7 @@ class Reference:
     def from_string(self, string):
         # We try to extract ref from string
         from .text import Text
-        t = Text(string, language=self.language, canon=self.canon.name)
+        t = Text(string.replace('_', ' '), language=self.language, canon=self.canon.name)
         refs = t.find_refs(string, valid_only=False)
 
         # If we don't find exactly one ref, we raise an error
